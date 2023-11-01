@@ -6,7 +6,25 @@ import tkinter as tk
 
 def gistogram():
     data = entry_data.get()
-    data = list(map(int, data.split()))
+    if not data:
+        print("Ошибка: Введите данные перед построением гистограммы")
+        return
+    try:
+        data = list(map(int, data.split()))
+    except ValueError:
+        # Обработка ошибки, если введены данные, которые нельзя преобразовать в целые числа
+        print("Ошибка: Введите оценки студентов в формате целых чисел, разделенных пробелами")
+        return
+    if max(data) > 100:
+        print("Ошибка: Максимальное значение оценки больше 100. Убедитесь, что данные верны.")
+        return
+    if 0 in data:
+        print("Ошибка: Значение оценки равно 0. Убедитесь, что данные верны.")
+        return
+    for i in range(len(data)):
+        if data[i] < 0:
+            print("Ошибка: Значение оценки меньше нуля. Убедитесь, что данные верны.")
+            return
 
     graph_window = tk.Toplevel(root)
     graph_window.title("Гистограмма успеваемости")
